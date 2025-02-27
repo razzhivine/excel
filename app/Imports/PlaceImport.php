@@ -37,7 +37,7 @@ class PlaceImport implements ToCollection, withHeadingRow, WithValidation, Skips
         }
         $json = json_encode($placesArray);
 
-        dump($json);
+//        dump($json);
 //        Storage::disk('public')->put("places-{$this->task->id}.json", $json);
 
         $curl = curl_init('https://guide.place/api/cppages');
