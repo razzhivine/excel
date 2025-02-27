@@ -8,6 +8,7 @@ use App\Models\File;
 use App\Models\Place;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PlaceController extends Controller
 {
@@ -16,7 +17,8 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        return inertia('Place/Index');
+        $data['link'] = Storage::disk('public')->url('files/storage.txt');
+        return inertia('Place/Index', compact('data'));
     }
 
 

@@ -33,9 +33,24 @@ class PlaceImport implements ToCollection, withHeadingRow, WithValidation, Skips
         $placesArray = [];
         foreach ($collection as $key => $row) {
             $projectFactory = PlaceFactory::make($row);
-            $placesArray[$key] = $projectFactory->getValues();
+            $placesArray['items'][$key] = $projectFactory->getValues();
         }
-        Storage::disk('public')->put("places-{$this->task->id}.json", json_encode($placesArray));
+        $json = json_encode($placesArray);
+
+        dump($json);
+//        Storage::disk('public')->put("places-{$this->task->id}.json", $json);
+
+        $curl = curl_init('https://guide.place/api/cppages');
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
+        $json_response = curl_exec($curl);
+        $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        if ( $status != 201 ) die("{$json_response} <br>") ;
+        curl_close($curl);
+        return json_decode($json_response, true);
     }
 
     public function rules(): array
