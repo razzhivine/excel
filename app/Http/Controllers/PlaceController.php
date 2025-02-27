@@ -17,8 +17,7 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        $data['link'] = Storage::disk('public')->url('files/storage.txt');
-        return inertia('Place/Index', compact('data'));
+        return inertia('Place/Index');
     }
 
 

@@ -12,9 +12,6 @@ export default {
   name: "Import",
   components: {ButtonLink, NavLink, TextInput, Button, PrimaryButton, Head},
   layout: MainLayout,
-  props: [
-    'data'
-  ],
   data() {
     return {
       file: null,
@@ -50,7 +47,6 @@ export default {
     <Button @click="selectFile">Загрузить файл</Button>
     <PrimaryButton v-if="file" @click="importFile">Импорт</PrimaryButton>
   </div>
-  <ButtonLink :href="data.link" target="_blank">Пример файла</ButtonLink>
 </template>
 
 <style scoped>
